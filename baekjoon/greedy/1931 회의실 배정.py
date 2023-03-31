@@ -1,30 +1,18 @@
-meetings = []
-reserved = []
-count = 0
+from operator import itemgetter
 
 n = int(input())
+meetings = [tuple(map(int, input().split())) for _ in range(n)]
+meetings.sort(key=itemgetter(1, 0))
 
-for i in range(n):
-    x, y = map(int, input().split())
-    meetings.append((x,y))
+reserved = -1
+count = 0
 
-# 준비 단계
+for start, end in meetings:
+    if start >= reserved:
+        reserved = end
+        count += 1
 
-shortest = meetings[0]
-shortest_time = meetings[0][1] - meetings[0][0]
+print(count)
 
-while(meetings):
-
-    # 제일 시간이 짧은 미팅 찾기
-
-    for meeting in meetings:
-        if  meeting[1] - meeting[0] < shortest_time:
-            shortest = meeting
-            shortest_time = meeting[1] - meeting[0]
-
-    # 더 넣을게 있을때
-
-
-# 제일 시간이 짧은 미팅 count += 1
-# 제일 짧은 미팅과 시간이 겹치지 않는 미팅 count += 1
-# 더 이상 겹치지 않는 미팅이 없을 때까지
+# n = 11
+# meetings = [(1, 4),(3, 5),(0, 6),(5, 7),(3, 8),(5, 9),(6, 10),(8, 11),(8, 12),(2, 13),(12, 14)]
